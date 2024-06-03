@@ -1,8 +1,21 @@
-﻿// Fraction.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+﻿
 #include <iostream>
 using namespace std;
+
+class Fraction;
+bool operator ==(Fraction& obg1, Fraction& obg2);
+bool operator !=(Fraction& obg1, Fraction& obg2);
+bool operator > (const Fraction& obg1, const Fraction& obg2);
+bool operator < (const Fraction& obg1, const Fraction& obg2);
+bool operator >= (const Fraction& obg1, const Fraction& obg2);
+bool operator <= (const Fraction& obg1, const Fraction& obg2);
+
+Fraction operator +(const Fraction& obg1, const Fraction& obg2);
+Fraction operator -(const Fraction& obg1, const Fraction& obg2);
+Fraction operator *(const Fraction& obg1, const Fraction& obg2);
+Fraction operator /(const Fraction& obg1, const Fraction& obg2);
+
+
 
 class Fraction // Дробь
 {
@@ -384,6 +397,31 @@ Fraction operator /(const Fraction& obg1, const Fraction& obg2)
 	return Result;
 }
 
+std::ostream& operator << (std::ostream& os, const Fraction& obg)
+{
+	if (obg.getNumerator() / obg.getDenominater() != 0)
+		os << obg.getNumerator() / obg.getDenominater() << " ";
+
+	// выводим дробную часть, если она есть 
+	// провераем числитель дробной части, если =0 то дробной части нет
+	if (obg.getNumerator() - (obg.getNumerator() / obg.getDenominater()) * obg.getDenominater() != 0)
+	{
+		//Если перед этим была целая часть, выводим скобки
+		if (obg.getNumerator() / obg.getDenominater() > 0) { os << "("; }
+		os << obg.getNumerator() % obg.getDenominater() << "/" << obg.getDenominater(); //Дробная часть
+		if (obg.getNumerator() / obg.getDenominater() > 0) { os << ")"; }
+	}
+	return os;
+}
+std::istream& operator >> (std::istream& in, Fraction& obg)
+{
+	int numerator ;
+	int denominater;
+	in >> numerator >> denominater;
+	obg.setNumerator (numerator);
+	obg.setDenominater (denominater);
+	return in;
+}
 
 int main()
 {
@@ -392,7 +430,9 @@ int main()
 	Fraction drob1;
 	drob1.printFraction();
 	//drob1.printProperFraction();
-	Fraction drob2 = 0.5;
+	Fraction drob2 = 2.76;
+	drob2.printProperFraction();
+	drob2.printFraction();
 	drob2 += drob1;
 	drob2.printFraction();
 	//drob2.printProperFraction();
@@ -442,7 +482,7 @@ int main()
 	Fraction drob9(-200, -200);
 	drob9.printFraction();
 	drob9.printProperFraction();
-
-
-	cout << "\n\n";
+	cin >> drob9;
+	drob9.printFraction();
+	cout << drob3 <<"\n\n";
 }
