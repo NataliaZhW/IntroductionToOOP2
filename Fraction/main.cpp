@@ -1,16 +1,16 @@
-// Fraction.cpp : This file contains the 'main' function. Program execution begins and ends there.
+п»ї// Fraction.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
 using namespace std;
 
-class Fraction // Дробь
+class Fraction // Р”СЂРѕР±СЊ
 {
 private:
-	int numerator; // Числитель
-	int denominater; // Знаменатель
+	int numerator; // Р§РёСЃР»РёС‚РµР»СЊ
+	int denominater; // Р—РЅР°РјРµРЅР°С‚РµР»СЊ
 public:
-	//конструкторы и деструктор
+	//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ Рё РґРµСЃС‚СЂСѓРєС‚РѕСЂ
 	Fraction() { numerator = denominater = 1; } //cout << "DefaultConstructop: \t" << this << "\n";
 	Fraction(int numerator)
 	{
@@ -21,7 +21,7 @@ public:
 	{
 		this->denominater = 1;
 		for (; (int)numeratorObg != numeratorObg; denominater *= 10, numeratorObg *= 10) {};
-		numerator = (int)numeratorObg;//в этот момент уже нет дробной части
+		numerator = (int)numeratorObg;//РІ СЌС‚РѕС‚ РјРѕРјРµРЅС‚ СѓР¶Рµ РЅРµС‚ РґСЂРѕР±РЅРѕР№ С‡Р°СЃС‚Рё
 		reduceFraction();
 	}
 	Fraction(int numerator, int denominater)
@@ -37,11 +37,11 @@ public:
 	}
 	~Fraction() {} //cout << "Destructop: \t\t" << this << "\n"; 
 
-	// Геттеры и сеттеры
+	// Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
 	int getNumerator() const { return numerator; }
 	void setNumerator(int numerator) { this->numerator = numerator; }
 	int getDenominater() const { return denominater; }
-	// с проверкой на 0
+	// СЃ РїСЂРѕРІРµСЂРєРѕР№ РЅР° 0
 	void setDenominater(int denominater)
 	{
 		if (denominater != 0) {
@@ -49,12 +49,12 @@ public:
 		}
 		else
 		{
-			cout << " Error:  denominater should not be equal 0 (!=0) (Не должен быть равен 0)\n";
+			cout << " Error:  denominater should not be equal 0 (!=0) (РќРµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ СЂР°РІРµРЅ 0)\n";
 			this->denominater = 1;
 		}
 	}
 
-	//Операторы
+	//РћРїРµСЂР°С‚РѕСЂС‹
 	Fraction& operator =(const Fraction& obg)
 	{
 		this->numerator = obg.numerator;
@@ -97,7 +97,7 @@ public:
 		//cout << "Assigment *=: \t\t" << this << "\n";
 		return *this;
 	}
-	// с проверкой на 0
+	// СЃ РїСЂРѕРІРµСЂРєРѕР№ РЅР° 0
 	Fraction& operator /=(int obg)
 	{
 		if (obg != 0) {
@@ -107,7 +107,7 @@ public:
 		}
 		else
 		{
-			cout << " Error: divizion by zero \n Деление на ноль, операция не выполнена!\n";
+			cout << " Error: divizion by zero \n Р”РµР»РµРЅРёРµ РЅР° РЅРѕР»СЊ, РѕРїРµСЂР°С†РёСЏ РЅРµ РІС‹РїРѕР»РЅРµРЅР°!\n";
 		}
 		return *this;
 	}
@@ -118,7 +118,7 @@ public:
 		Fraction temp(numeratorObg);
 		this->numerator = this->numerator * temp.getDenominater() + temp.getNumerator() * this->denominater;
 		this->denominater = this->denominater * temp.getDenominater();
-		reduceFraction(); //сокращаем
+		reduceFraction(); //СЃРѕРєСЂР°С‰Р°РµРј
 		return *this;
 	}
 	Fraction& operator -=(double numeratorObg)
@@ -126,7 +126,7 @@ public:
 		Fraction temp(numeratorObg);
 		this->numerator = this->numerator * temp.getDenominater() + temp.getNumerator() * this->denominater;
 		this->denominater = this->denominater * temp.getDenominater();
-		reduceFraction(); //сокращаем
+		reduceFraction(); //СЃРѕРєСЂР°С‰Р°РµРј
 		return *this;
 	}
 	Fraction& operator *=(double numeratorObg)
@@ -137,7 +137,7 @@ public:
 		reduceFraction();
 		return *this;
 	}
-	// с проверкой на 0
+	// СЃ РїСЂРѕРІРµСЂРєРѕР№ РЅР° 0
 	Fraction& operator /=(double numeratorObg)
 	{
 		if (numeratorObg != 0) {
@@ -146,7 +146,7 @@ public:
 			this->denominater *= temp.getNumerator();
 			reduceFraction();
 
-			// // Первые варианты то же самое, но без временного объекта
+			// // РџРµСЂРІС‹Рµ РІР°СЂРёР°РЅС‚С‹ С‚Рѕ Р¶Рµ СЃР°РјРѕРµ, РЅРѕ Р±РµР· РІСЂРµРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 			//int denominatorObg = 1;
 			//for (; (int)numeratorObg != numeratorObg; denominatorObg *= 10, numeratorObg *= 10) {};
 
@@ -156,7 +156,7 @@ public:
 		}
 		else
 		{
-			cout << " Error: divizion by zero \n Деление на ноль, операция не выполнена!\n";
+			cout << " Error: divizion by zero \n Р”РµР»РµРЅРёРµ РЅР° РЅРѕР»СЊ, РѕРїРµСЂР°С†РёСЏ РЅРµ РІС‹РїРѕР»РЅРµРЅР°!\n";
 		}
 		//cout << "Assigment /=: \t\t" << this << "\n";
 		return *this;
@@ -166,21 +166,21 @@ public:
 
 	Fraction& operator +=(Fraction& obg)
 	{
-		//reduceFraction();//сокращаем
-		//obg.reduceFraction();//сокращаем
+		//reduceFraction();//СЃРѕРєСЂР°С‰Р°РµРј
+		//obg.reduceFraction();//СЃРѕРєСЂР°С‰Р°РµРј
 		this->numerator = this->numerator * obg.getDenominater() + obg.getNumerator() * this->denominater;
 		this->denominater = this->denominater * obg.getDenominater();
-		reduceFraction(); //сокращаем
+		reduceFraction(); //СЃРѕРєСЂР°С‰Р°РµРј
 		//cout << "Assigment+=: \t\t" << this << "\n";
 		return *this;
 	}
 	Fraction& operator -=(Fraction& obg)
 	{
-		//reduceFraction();//сокращаем
-		//obg.reduceFraction();//сокращаем
+		//reduceFraction();//СЃРѕРєСЂР°С‰Р°РµРј
+		//obg.reduceFraction();//СЃРѕРєСЂР°С‰Р°РµРј
 		this->numerator = this->numerator * obg.getDenominater() - obg.getNumerator() * this->denominater;
 		this->denominater = this->denominater * obg.getDenominater();
-		reduceFraction(); //сокращаем
+		reduceFraction(); //СЃРѕРєСЂР°С‰Р°РµРј
 		//cout << "Assigment+=: \t\t" << this << "\n";
 		return *this;
 	}
@@ -236,45 +236,45 @@ public:
 		return old;
 	}
 
-	//Методы
-	// дробь на экран
+	//РњРµС‚РѕРґС‹
+	// РґСЂРѕР±СЊ РЅР° СЌРєСЂР°РЅ
 	void printFraction() const { cout << numerator << "/" << denominater << " \n"; }
-	void printProperFraction() //Преобразование в правильную дробь для печати
+	void printProperFraction() //РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РІ РїСЂР°РІРёР»СЊРЅСѓСЋ РґСЂРѕР±СЊ РґР»СЏ РїРµС‡Р°С‚Рё
 	{
 		reduceFraction();
-		cout << "Правильная дробь с целой частью:\t";
+		cout << "РџСЂР°РІРёР»СЊРЅР°СЏ РґСЂРѕР±СЊ СЃ С†РµР»РѕР№ С‡Р°СЃС‚СЊСЋ:\t";
 
-		// выводим целую часть, если она есть (она может быть отрицательной)
+		// РІС‹РІРѕРґРёРј С†РµР»СѓСЋ С‡Р°СЃС‚СЊ, РµСЃР»Рё РѕРЅР° РµСЃС‚СЊ (РѕРЅР° РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕР№)
 		if (numerator / denominater != 0)
 			cout << numerator / denominater << " ";
 
-		// выводим дробную часть, если она есть 
-		// провераем числитель дробной части, если =0 то дробной части нет
+		// РІС‹РІРѕРґРёРј РґСЂРѕР±РЅСѓСЋ С‡Р°СЃС‚СЊ, РµСЃР»Рё РѕРЅР° РµСЃС‚СЊ 
+		// РїСЂРѕРІРµСЂР°РµРј С‡РёСЃР»РёС‚РµР»СЊ РґСЂРѕР±РЅРѕР№ С‡Р°СЃС‚Рё, РµСЃР»Рё =0 С‚Рѕ РґСЂРѕР±РЅРѕР№ С‡Р°СЃС‚Рё РЅРµС‚
 		if (numerator - (numerator / denominater) * denominater != 0)
 		{
-			//Если перед этим была целая часть, выводим скобки
+			//Р•СЃР»Рё РїРµСЂРµРґ СЌС‚РёРј Р±С‹Р»Р° С†РµР»Р°СЏ С‡Р°СЃС‚СЊ, РІС‹РІРѕРґРёРј СЃРєРѕР±РєРё
 			if (numerator / denominater > 0) { cout << "("; }
-			cout << numerator % denominater << "/" << denominater; //Дробная часть
+			cout << numerator % denominater << "/" << denominater; //Р”СЂРѕР±РЅР°СЏ С‡Р°СЃС‚СЊ
 			if (numerator / denominater > 0) { cout << ")"; }
 		}
 		cout << " \n";
 	}
-	//сокращение дроби
+	//СЃРѕРєСЂР°С‰РµРЅРёРµ РґСЂРѕР±Рё
 	void reduceFraction()
 	{
-		//если числитель = 0, то знаминатель устанавливаем =1 
-		// для упрощения последующих расчетов
+		//РµСЃР»Рё С‡РёСЃР»РёС‚РµР»СЊ = 0, С‚Рѕ Р·РЅР°РјРёРЅР°С‚РµР»СЊ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј =1 
+		// РґР»СЏ СѓРїСЂРѕС‰РµРЅРёСЏ РїРѕСЃР»РµРґСѓСЋС‰РёС… СЂР°СЃС‡РµС‚РѕРІ
 		if (this->numerator == 0)
 		{
 			denominater = 1;
 		}
-		//убираем отрицательность
+		//СѓР±РёСЂР°РµРј РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕСЃС‚СЊ
 		if (this->denominater < 0)
 		{
 			numerator *= -1;
 			denominater *= -1;
 		}
-		//сокращаем
+		//СЃРѕРєСЂР°С‰Р°РµРј
 		for (int i = 2; (i <= numerator && i <= denominater); i++)
 		{
 			if ((numerator % i == 0) && (denominater % i == 0))
@@ -284,9 +284,9 @@ public:
 				i = 1;
 			}
 		}
-		//Если подобных расчетов много, то можно создать массив простых чисел (побольше, чем в примере)
+		//Р•СЃР»Рё РїРѕРґРѕР±РЅС‹С… СЂР°СЃС‡РµС‚РѕРІ РјРЅРѕРіРѕ, С‚Рѕ РјРѕР¶РЅРѕ СЃРѕР·РґР°С‚СЊ РјР°СЃСЃРёРІ РїСЂРѕСЃС‚С‹С… С‡РёСЃРµР» (РїРѕР±РѕР»СЊС€Рµ, С‡РµРј РІ РїСЂРёРјРµСЂРµ)
 		// arr[10]{2,3,5,7,11,13,17,19,23,29}
-		// в цикле проверять не все числа, а только простые примерно так:
+		// РІ С†РёРєР»Рµ РїСЂРѕРІРµСЂСЏС‚СЊ РЅРµ РІСЃРµ С‡РёСЃР»Р°, Р° С‚РѕР»СЊРєРѕ РїСЂРѕСЃС‚С‹Рµ РїСЂРёРјРµСЂРЅРѕ С‚Р°Рє:
 
 	 /* for (int i = 0; (arr[i] <= numerator && arr[i] <= denominater); )
 		{
@@ -295,21 +295,21 @@ public:
 				numerator /= arr[i];
 				denominater /= arr[i];
 			else
-				i++; //к следующему простому числу переходим только,
-					 //если if получил ложь, иначе проверяем еще раз деление на этот же множитель
+				i++; //Рє СЃР»РµРґСѓСЋС‰РµРјСѓ РїСЂРѕСЃС‚РѕРјСѓ С‡РёСЃР»Сѓ РїРµСЂРµС…РѕРґРёРј С‚РѕР»СЊРєРѕ,
+					 //РµСЃР»Рё if РїРѕР»СѓС‡РёР» Р»РѕР¶СЊ, РёРЅР°С‡Рµ РїСЂРѕРІРµСЂСЏРµРј РµС‰Рµ СЂР°Р· РґРµР»РµРЅРёРµ РЅР° СЌС‚РѕС‚ Р¶Рµ РјРЅРѕР¶РёС‚РµР»СЊ
 			}
 		}*/
 	}
 };
 
-//Внешние функции
-bool operator ==(Fraction& obg1, Fraction& obg2) //дроби будем изменять - сокращать
+//Р’РЅРµС€РЅРёРµ С„СѓРЅРєС†РёРё
+bool operator ==(Fraction& obg1, Fraction& obg2) //РґСЂРѕР±Рё Р±СѓРґРµРј РёР·РјРµРЅСЏС‚СЊ - СЃРѕРєСЂР°С‰Р°С‚СЊ
 {
 	obg1.reduceFraction();
 	obg2.reduceFraction();
 	return obg1.getNumerator() == obg2.getNumerator() && obg1.getDenominater() == obg2.getDenominater();
 }
-bool operator !=(Fraction& obg1, Fraction& obg2) //дроби будем изменять - сокращать
+bool operator !=(Fraction& obg1, Fraction& obg2) //РґСЂРѕР±Рё Р±СѓРґРµРј РёР·РјРµРЅСЏС‚СЊ - СЃРѕРєСЂР°С‰Р°С‚СЊ
 {
 	obg1.reduceFraction();
 	obg2.reduceFraction();
@@ -332,53 +332,53 @@ bool operator <= (const Fraction& obg1, const Fraction& obg2)
 	return obg1.getNumerator() * obg2.getDenominater() <= obg2.getNumerator() * obg1.getDenominater();
 }
 
-// функция, которая возвращает дробь, результат сложения дробей
+// С„СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РІРѕР·РІСЂР°С‰Р°РµС‚ РґСЂРѕР±СЊ, СЂРµР·СѓР»СЊС‚Р°С‚ СЃР»РѕР¶РµРЅРёСЏ РґСЂРѕР±РµР№
 Fraction operator +(const Fraction& obg1, const Fraction& obg2)
 {
 	Fraction Result;
-	// числитель и знаменатель: по математическому правилу
+	// С‡РёСЃР»РёС‚РµР»СЊ Рё Р·РЅР°РјРµРЅР°С‚РµР»СЊ: РїРѕ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРѕРјСѓ РїСЂР°РІРёР»Сѓ
 	Result.setNumerator(obg1.getNumerator() * obg2.getDenominater() + obg2.getNumerator() * obg1.getDenominater());
 	Result.setDenominater(obg1.getDenominater() * obg2.getDenominater());
-	Result.reduceFraction(); //сокращаем
+	Result.reduceFraction(); //СЃРѕРєСЂР°С‰Р°РµРј
 	//cout << "+Assigment: \t\t" << &Result << "\n";
 	return Result;
 }
-// результат вычитания дробей
+// СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹С‡РёС‚Р°РЅРёСЏ РґСЂРѕР±РµР№
 Fraction operator -(const Fraction& obg1, const Fraction& obg2)
 {
 	Fraction Result;
-	// числитель и знаменатель: по математическому правилу
+	// С‡РёСЃР»РёС‚РµР»СЊ Рё Р·РЅР°РјРµРЅР°С‚РµР»СЊ: РїРѕ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРѕРјСѓ РїСЂР°РІРёР»Сѓ
 	Result.setNumerator(obg1.getNumerator() * obg2.getDenominater() - obg2.getNumerator() * obg1.getDenominater());
 	Result.setDenominater(obg1.getDenominater() * obg2.getDenominater());
-	Result.reduceFraction(); //сокращаем
+	Result.reduceFraction(); //СЃРѕРєСЂР°С‰Р°РµРј
 	//cout << "-Assigment: \t\t" << &Result << "\n";
 	return Result;
 }
-// результат произведения дробей
+// СЂРµР·СѓР»СЊС‚Р°С‚ РїСЂРѕРёР·РІРµРґРµРЅРёСЏ РґСЂРѕР±РµР№
 Fraction operator *(const Fraction& obg1, const Fraction& obg2)
 {
 	Fraction Result;
-	// числитель и знаменатель: по математическому правилу
+	// С‡РёСЃР»РёС‚РµР»СЊ Рё Р·РЅР°РјРµРЅР°С‚РµР»СЊ: РїРѕ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРѕРјСѓ РїСЂР°РІРёР»Сѓ
 	Result.setNumerator(obg1.getNumerator() * obg2.getNumerator());
 	Result.setDenominater(obg1.getDenominater() * obg2.getDenominater());
-	Result.reduceFraction(); //сокращаем    
+	Result.reduceFraction(); //СЃРѕРєСЂР°С‰Р°РµРј    
 	//cout << "*Assigment: \t\t" << &Result << "\n";
 	return Result;
 }
-// результат деления дробей
+// СЂРµР·СѓР»СЊС‚Р°С‚ РґРµР»РµРЅРёСЏ РґСЂРѕР±РµР№
 Fraction operator /(const Fraction& obg1, const Fraction& obg2)
 {
 	Fraction Result;
 	if (obg2.getNumerator() == 0)
 	{
-		cout << " Error \n division by zero (Деление на ноль - операция не выполнена)\n";
+		cout << " Error \n division by zero (Р”РµР»РµРЅРёРµ РЅР° РЅРѕР»СЊ - РѕРїРµСЂР°С†РёСЏ РЅРµ РІС‹РїРѕР»РЅРµРЅР°)\n";
 	}
-	// числитель и знаменатель: по математическому правилу
+	// С‡РёСЃР»РёС‚РµР»СЊ Рё Р·РЅР°РјРµРЅР°С‚РµР»СЊ: РїРѕ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРѕРјСѓ РїСЂР°РІРёР»Сѓ
 	else
 	{
 		Result.setNumerator(obg1.getNumerator() * obg2.getDenominater());
 		Result.setDenominater(obg1.getDenominater() * obg2.getNumerator());
-		Result.reduceFraction(); //сокращаем    
+		Result.reduceFraction(); //СЃРѕРєСЂР°С‰Р°РµРј    
 	}
 	//cout << "/Assigment: \t\t" << &Result << "\n";
 	return Result;
@@ -388,7 +388,7 @@ Fraction operator /(const Fraction& obg1, const Fraction& obg2)
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	cout << "Первая, вторая и третья дроби.\n";
+	cout << "РџРµСЂРІР°СЏ, РІС‚РѕСЂР°СЏ Рё С‚СЂРµС‚СЊСЏ РґСЂРѕР±Рё.\n";
 	Fraction drob1;
 	drob1.printFraction();
 	//drob1.printProperFraction();
@@ -408,37 +408,37 @@ int main()
 
 	//drob3.printProperFraction();
 
-	//cout << "Четвертая дробь.\n";
+	//cout << "Р§РµС‚РІРµСЂС‚Р°СЏ РґСЂРѕР±СЊ.\n";
 	//Fraction drob4 = drob3 + drob2;
-	//cout << "\nЧетвертая дробь, как сумма третьей и второй.\n";
+	//cout << "\nР§РµС‚РІРµСЂС‚Р°СЏ РґСЂРѕР±СЊ, РєР°Рє СЃСѓРјРјР° С‚СЂРµС‚СЊРµР№ Рё РІС‚РѕСЂРѕР№.\n";
 	//drob4.printFraction();
 	//drob4.printProperFraction();
 
-	////cout << "Пятая дробь.\n";
+	////cout << "РџСЏС‚Р°СЏ РґСЂРѕР±СЊ.\n";
 	//Fraction drob5 = drob4 - drob1;
-	//cout << "\nПятая дробь, как разность четвертой и первой.\n";
+	//cout << "\nРџСЏС‚Р°СЏ РґСЂРѕР±СЊ, РєР°Рє СЂР°Р·РЅРѕСЃС‚СЊ С‡РµС‚РІРµСЂС‚РѕР№ Рё РїРµСЂРІРѕР№.\n";
 	//drob5.printFraction();
 	//drob5.printProperFraction();
 
-	////cout << "Шестая дробь.\n";
+	////cout << "РЁРµСЃС‚Р°СЏ РґСЂРѕР±СЊ.\n";
 	//Fraction drob6 = drob3 * drob2;
-	//cout << "\nШестая дробь, как произведение третьей и второй.\n";
+	//cout << "\nРЁРµСЃС‚Р°СЏ РґСЂРѕР±СЊ, РєР°Рє РїСЂРѕРёР·РІРµРґРµРЅРёРµ С‚СЂРµС‚СЊРµР№ Рё РІС‚РѕСЂРѕР№.\n";
 	//drob6.printFraction();
 
-	////cout << "Седьмая дробь.\n";
+	////cout << "РЎРµРґСЊРјР°СЏ РґСЂРѕР±СЊ.\n";
 	//Fraction drob7;
 	//drob7 = drob4 / drob5;
-	//cout << "\nСедьмая дробь, как частное четвертой и пятой.\n";
+	//cout << "\nРЎРµРґСЊРјР°СЏ РґСЂРѕР±СЊ, РєР°Рє С‡Р°СЃС‚РЅРѕРµ С‡РµС‚РІРµСЂС‚РѕР№ Рё РїСЏС‚РѕР№.\n";
 	//drob7.printFraction();
 
-	//cout << "\nВосьмая дробь.\n";
+	//cout << "\nР’РѕСЃСЊРјР°СЏ РґСЂРѕР±СЊ.\n";
 	//Fraction drob8(-200, -40);
 	//drob8.printFraction();
-	//cout << "сокращаем\n";
+	//cout << "СЃРѕРєСЂР°С‰Р°РµРј\n";
 	//drob8.reduceFraction();
 	//drob8.printFraction();
 
-	cout << "\nДевятая дробь, без дробной части.\n";
+	cout << "\nР”РµРІСЏС‚Р°СЏ РґСЂРѕР±СЊ, Р±РµР· РґСЂРѕР±РЅРѕР№ С‡Р°СЃС‚Рё.\n";
 	Fraction drob9(-200, -200);
 	drob9.printFraction();
 	drob9.printProperFraction();
