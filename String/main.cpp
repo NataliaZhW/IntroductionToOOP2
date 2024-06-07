@@ -1,5 +1,5 @@
 ﻿// String.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+////String
 
 #include <iostream>
 using namespace std;
@@ -7,106 +7,129 @@ using namespace std;
 class String
 {
 private:
-	static const int MAX_Lenght = 80;
-	char* data;
-	int length;
+	int size;//Размер строки в Байтах
+	char* data;//Адрес строки в динамической памяти	
 public:
+	//			Constructors:
 	String()
 	{
 		cout << "\nЗапустился 1 контруктор по умолчанию\n";
-		data = new char[MAX_Lenght + 1] {};
-		length = MAX_Lenght;
+		int size{ 80 };
+		char* data = new char[size] {};
 	}
-	String(int sise)
+	String(int size)
 	{
-		cout << "\nЗапустился 2 контруктор, принимает размер и обрезает лишние символы\n";
-		data = new char[sise + 1] {};
-		length = sise;
+		this->size = size;
+		this->data = new char[size] {};
+		cout << "1ArgConstructop: \t" << this << " Size:\t" << this->size << "\t" << "Data: " << data << "\n";
+
+
+		//cout << "\nЗапустился 2 контруктор, принимает размер\n";
+
 	}
 	String(const char* str) {
 		cout << "\nЗапустился 3 контруктор, принимает строку, ограничивает длину строки\n";
-		length = strlen(str);
-		data = new char[length + 1] {};
-		strcpy_s(data, length + 1, str);
+		size = strlen(str) + 1;
+		data = new char[size] {};
+		strcpy_s(data, size, str);
 	}
 	String(const String& obg)
 	{
 		cout << "\nЗапустился 4 контруктор, копирования\n";
-		length = obg.length;
-		data = new char[length + 1] {};
-		strcpy_s(data, length, obg.data);
+		size = obg.size;
+		data = new char[size] {};//+ 1
+		strcpy_s(data, size, obg.data);
 	}
 	~String()
 	{
-		delete[] data;
+		delete[] this->data;
+		cout << "Destructor:\t\t" << this << endl;
 	}
 	/*void input() {
 		cout << "Введите строку: ";
-		cin.getline(data, length + 1);
+		cin.getline(data, size + 1);
 	}*/
 
 
-	int getLength() const { return length; };//количество полей
+	int getSize() const { return size; };//количество полей
 	void setData(const char str) { this->data = data; };
 	char getChar(int i) const { return data[i]; };// поле массива
 	void setChar(char znak, int i) { this->data[i] = znak; };//Запись одного знака
 
+	//				Methods:
 	void print() const {
-		cout << "Ваша строка: " << data << "\n";
-		cout << this->length << " размер строки\n";
+		cout << "Size:\t" << this->size << "\t";
+		cout << "Data: " << data << "\n";
+	};
+	char* printLight() const {
+		return data;
 	};
 
 };
 
 String operator +(const String& obg1, const String& obg2)
 {
-	String Result;//(obg1.getLength()+obg2.getLength());
-	for (int i = 0; i < Result.getLength(); i++)
+	int size = obg1.getSize() - 1 + obg2.getSize();
+	String Result(size);//;
+	//Result.getSize(obg1.getSize() + obg2.getSize());
+	int i = 0;
+	for (; i < (obg1.getSize() - 1); i++) {
+		Result.setChar(obg1.getChar(i), i);
+		cout << obg1.getChar(i);
+	}//setChar(char znak, int i)
+	for (; i < Result.getSize(); i++)
 	{
-		int index;
-		bool flag = 0;
-		if (i < obg1.getLength() && !flag) {
-			index = i;
-			if (!flag)
-			{
-				if (obg1.getChar(index) != '\0')
-					cout << obg1.getChar(index) << "\n";
-				Result.setChar(obg1.getChar(index), i);//setChar(char znak, int i)
-			}
-		}
-		else
-		{
-			index = i - obg1.getLength();
-			Result.setChar(obg2.getChar(index), i);
-		}
-		cout << i << "\n";
-	}
-	//Result.setData('a',3);
-	cout << "Конкатенация: \t\t" << &Result << "\n";
+		Result.setChar(obg2.getChar(i - obg1.getSize() + 1), i);
+		cout << obg2.getChar(i - obg1.getSize() + 1);
+	}//setChar(char znak, int i)
+	cout << i << "\n";
+	Result.print();
 	return Result;
 }
+std::ostream& operator << (std::ostream& os, const String& obg)
+{
+	os << obg.printLight();
+	return os;
+}
+
+//cout << "Конкатенация: \t\t" << &Result << "\n";
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	String str;
+	String str(80);
 	str.print();
 	cout << "\n";
 	String str1 = "Hello";
 	str1.print();
-	str1.setChar('3', 0);
-	str1.print();
-	for (int i = 0; i < str1.getLength(); i++)
+	//str1.setChar('3', 0);
+	//str1.print();
+	/*for (int i = 0; i < str1.getSize(); i++)
 	{
 		cout << str1.getChar(i);
-	}
+	}*/
 	String str2("World");
 	str2.print();
 
-	String str3 = str + str;
+	String str3 = str1 + str2;
 	str3.print();
-
+	cout << str1 << endl;
+	cout << str2 << endl;
+	cout << str3 << endl;	//HelloWorld
 	//String str4(str1);
 	//str4.print();
 	return 0;
 }
+
+
+
+//	//String str;
+//	//str.print();
+//
+//	String str1 = "Hello";
+//	String str2 = "World";
+//	
+//	String str3 = str1 + str2;
+//	
+//}
