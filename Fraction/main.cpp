@@ -2,6 +2,10 @@
 #include <iostream>
 using namespace std;
 
+#define delimiter			"\n-----------------------------------\n"
+#define double_delimiter	"\n===================================\n"
+
+
 class Fraction;
 bool operator ==(Fraction& obg1, Fraction& obg2);
 bool operator !=(Fraction& obg1, Fraction& obg2);
@@ -24,11 +28,12 @@ private:
 	int denominater; // Знаменатель
 public:
 	//конструкторы и деструктор
-	Fraction() { numerator = denominater = 1; } //cout << "DefaultConstructop: \t" << this << "\n";
-	Fraction(int numerator)
+	Fraction() { numerator = denominater = 1; cout << "DefaultConstructop: \t" << this << "\n"; } //
+	explicit Fraction(int numerator)
 	{
 		setNumerator(numerator);
 		denominater = 1;
+		cout << "1ArgConstructop: \t" << this << "\n";
 	}
 	Fraction(double numeratorObg)
 	{
@@ -36,19 +41,21 @@ public:
 		for (; (int)numeratorObg != numeratorObg; denominater *= 10, numeratorObg *= 10) {};
 		numerator = (int)numeratorObg;//в этот момент уже нет дробной части
 		reduceFraction();
+		cout << "1ArgConstructop double: \t" << this << "\n";
 	}
 	Fraction(int numerator, int denominater)
 	{
 		setNumerator(numerator);
 		setDenominater(denominater);
+		cout << "2ArgConstructop: \t" << this << "\n";
 	}
 	Fraction(const Fraction& obg)
 	{
 		this->numerator = obg.numerator;
 		this->denominater = obg.denominater;
-		//cout << "2ArgConstructop: \t" << this << "\n";
+
 	}
-	~Fraction() {} //cout << "Destructop: \t\t" << this << "\n"; 
+	~Fraction() { cout << "Destructop: \t\t" << this << "\n"; } //
 
 	// Геттеры и сеттеры
 	int getNumerator() const { return numerator; }
@@ -68,6 +75,10 @@ public:
 	}
 
 	//Операторы
+	explicit operator int() const { return (int)(numerator / denominater); }
+	explicit operator double() const { return (double)numerator / (double)denominater; }
+	
+
 	Fraction& operator =(const Fraction& obg)
 	{
 		this->numerator = obg.numerator;
@@ -98,24 +109,24 @@ public:
 	}
 	Fraction& operator -=(int obg)
 	{
-		reduceFraction();
 		numerator -= denominater * obg;
+		reduceFraction();
 		//cout << "Assigment -=: \t\t" << this << "\n";
 		return *this;
 	}
 	Fraction& operator *=(int obg)
 	{
-		reduceFraction();
 		numerator = numerator * obg;
 		//cout << "Assigment *=: \t\t" << this << "\n";
 		return *this;
+		reduceFraction();
 	}
 	// с проверкой на 0
 	Fraction& operator /=(int obg)
 	{
 		if (obg != 0) {
-			reduceFraction();
 			denominater = denominater * obg;
+			reduceFraction();
 			//cout << "Assigment /*: \t\t" << this << "\n";			
 		}
 		else
@@ -174,7 +185,6 @@ public:
 		//cout << "Assigment /=: \t\t" << this << "\n";
 		return *this;
 	}
-
 
 
 	Fraction& operator +=(Fraction& obg)
@@ -413,76 +423,276 @@ std::ostream& operator << (std::ostream& os, const Fraction& obg)
 	}
 	return os;
 }
-std::istream& operator >> (std::istream& in, Fraction& obg)
+std::istream& operator >> (std::istream& is, Fraction& obg)
 {
-	int numerator ;
+	int numerator;
 	int denominater;
-	in >> numerator >> denominater;
-	obg.setNumerator (numerator);
-	obg.setDenominater (denominater);
-	return in;
+	is >> numerator >> denominater;
+	obg.setNumerator(numerator);
+	obg.setDenominater(denominater);
+	return is;
+	//
+//	// //istream - input stream (поток ввода)
+////cin - Console In
+//	{
+//		/*
+//		----------------------------
+//		5
+//		1/2
+//		2 3/4
+//		2(3/4)
+//		2+3/4
+//		----------------------------
+//		*/
+//		const int SIZE = 64;
+//		char buffer[SIZE]{};
+//		//is >> buffer;
+//		is.getline(buffer, SIZE);
+//		int number[3];
+//		int n = 0;
+//		const char delimiters[] = "(/) +";
+//		for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
+//			//Функция strtok() разделяет строку на токены:
+//			//https://legacy.cplusplus.com/reference/cstring/strtok/
+//				//	!!! ФУНКЦИЯ strtok() ИЗМЕНЯЕТ ВХОДНУЮ СТРОКУ !!!
+//			number[n++] = atoi(pch);
+//		//pch - Pointer to Character (Указатель на символ)
+//		//Функция atoi() - "ASCII string to int" принимает строку, и взвращает значение типа 'int' найденное в этой строке
+//		//https://legacy.cplusplus.com/reference/cstdlib/atoi/
+//		//for (int i = 0; i < n; i++)cout << number[i] << "\t"; cout << endl;
+//
+//		switch (n)
+//		{
+//		case 1:	obj = Fraction(number[0]); break;
+//		case 2: obj = Fraction(number[0], number[1]); break;
+//		case 3: obj = Fraction(number[0], number[1], number[2]); break;
+//		}
+//
+//		return is;
+	//https://legacy.cplusplus/reference/cstring/strtok
+	//const int SIZE = 32;
+	//char buffer[SIZE]{};
+	//is >> buffer;
+	//int number[3];
+	//int n = 0;
+	//const char delimiters[] = "(/) +";
+	//for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
+	//	number[n++] = atoi(pch);
+
+	//	//for (int i = 0; i< n;i++) cout << number[i] <<"\t"; cout << endl;
+	//	switch (n)
+	//	{
+	//	case 1:obg = Fraction(number[0]); break;
+	//	case 2:obg = Fraction(number[0], number[1]); break;
+	//	case 3:obg = Fraction(number[0], number[1], number[2]); break;
+	//	default:
+	//		break;
+	//	}
 }
+
+
+//#define CONSTRUCTORS_CHECK
+//#define ARITHMETICAL_OPERATORS_CHECK
+//#define COMPARISON_OPERATORS_CHECK
+//#define STREAMS_CHECK
+//#define TYPE_CONVERSIONS_BASICS
+//#define CONVERSIONS_FROM_OTHER_TO_CLASS
+//#define CONVERSIONS_FROM_CLASS_TO_OTHER
+#define CONVERSIONS_TASK_1
+#define CONVERSIONS_TASK_2
+
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	cout << "Первая, вторая и третья дроби.\n";
-	Fraction drob1;
-	drob1.printFraction();
+#ifdef CONSTRUCTORS_CHECK
+	Fraction A;		//Default constructor
+	A.print();
+
+	Fraction B = 5;	//Single-argument constructor
+	B.print();
+
+	Fraction C(1, 2);
+	C.print();
+
+	Fraction D(3, 4);
+	D.print();
+
+	Fraction E = D;
+	E.print();
+
+	Fraction F;
+	F = E;
+	F.print();
+#endif // CONSTRUCTORS_CHECK
+
+#ifdef ARITHMETICAL_OPERATORS_CHECK
+	//double a = 2;
+//double b = 3;
+//double c = a * b;
+
+	Fraction A(3, 4);
+	A.print();
+
+	Fraction B(4, 5);
+	B.print();
+
+	/*Fraction C = A / B;
+	C.print();
+	(C++).print();
+	C.print();
+
+	A.print();
+	B.print();*/
+
+	A *= B;		//A = A*B;
+	A.print();
+
+	A /= B;
+	A.print();
+
+	//int a = 2;
+	//int* pa = &a;
+	////a = pa;
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++a;
+	////a++++++++++++++++++++++++++++++++++++++++++++++++++++++++++;
+	//cout << a << endl;  
+#endif // ARITHMETICAL_OPERATORS_CHECK
+
+#ifdef COMPARISON_OPERATORS_CHECK
+	//cout << (2 == 3) << endl;
+	cout << (Fraction(1, 3) >= Fraction(5, 11)) << endl;
+#endif // COMPARISON_OPERATORS_CHECK
+
+#ifdef STREAMS_CHECK
+	Fraction A(3, 4);
+	cout << "Введите простую дробь: "; cin >> A;
+
+	cout << A << endl;
+#endif // STREAMS_CHECK
+
+#ifdef TYPE_CONVERSIONS_BASICS
+	//(type)value;	C-like notation		(C-подобная форма записи)
+//type(value);	Functional notation	(Функицональная форма записи)
+//int a = 2.5;
+//C4244: Conversion from 'type_1' to 'type_2', possible loss of data;
+//		l-value = r-value;
+
+	int a = 2;		//No conversions
+	double b = 3;	//Conversion from less to more
+	int c = b;		//Conversion from more to less without data loss
+	int d = 2.5;	//Conversion from more to less with data loss
+	cout << sizeof(int) << endl;
+	cout << sizeof(double) << endl;
+#endif // TYPE_CONVERSIONS_BASICS
+	
+#ifdef CONVERSIONS_FROM_OTHER_TO_CLASS
+	/*
+----------------------------------
+1. From other to Class:
+	- Single-argument constructor;
+	- CopyAssignment;
+2. From Class to other;
+----------------------------------
+*/
+	Fraction A = (Fraction)5;	//Convertion from 'int' to 'Fraction'
+	//Single-Argument constructor
+	cout << A << endl;
+
+	cout << double_delimiter << endl;
+
+	Fraction B;	//Default constructor
+	cout << delimiter << endl;
+	B = Fraction(8);		//Convertion from 'int' to Fraction
+	//Single-Argument constructor
+	//Copy assignment
+	cout << delimiter << endl;
+	cout << B << endl;
+
+	cout << double_delimiter << endl;
+#endif // CONVERSIONS_FROM_OTHER_TO_CLASS
+
+#ifdef CONVERSIONS_TASK_1
+	Fraction A(3, 4);
+	cout << A << endl;
+
+	//int a = (int)A;
+	double a = (double)A;
+	cout << a << endl;
+
+#endif // CONVERSIONS_TASK_1
+
+#ifdef CONVERSIONS_TASK_2
+	Fraction B = 2.75;
+	cout << B << endl;
+#endif // CONVERSIONS_TASK_2
+
+
+	//cout << "Первая, вторая и третья дроби.\n";
+	//Fraction drob1;
+	//drob1.printFraction();
 	//drob1.printProperFraction();
-	Fraction drob2 = 2.76;
-	drob2.printProperFraction();
-	drob2.printFraction();
-	drob2 += drob1;
-	drob2.printFraction();
+
+	Fraction drob2;
+	drob2 = Fraction(2.52);
 	//drob2.printProperFraction();
-	Fraction drob3(2, 3);
-	drob3.printFraction();
-
-	drob2 /= drob3;
 	drob2.printFraction();
+	int a1 = (int)drob2;
+	double d = (double)drob2;
+	cout << a1 << "\n";
+	cout << d << "\n";
+	cout << (double)2/3 << "\n";
 
-	drob2 /= 0;
-	drob2.printFraction();
-	cout << "\n" << (drob2 >= drob2) << "\n";
-
+	//drob2 += drob1;
+	//drob2.printFraction();
+	////drob2.printProperFraction();
+	//Fraction drob3(2, 3);
+	//drob3.printFraction();
+    //
+	//drob2 /= drob3;
+	//drob2.printFraction();
+	//
+	//drob2 /= 0;
+	//drob2.printFraction();
+	//cout << "\n" << (drob2 >= drob2) << "\n";
+	//
 	//drob3.printProperFraction();
-
+	//
 	//cout << "Четвертая дробь.\n";
 	//Fraction drob4 = drob3 + drob2;
 	//cout << "\nЧетвертая дробь, как сумма третьей и второй.\n";
 	//drob4.printFraction();
 	//drob4.printProperFraction();
-
+	//
 	////cout << "Пятая дробь.\n";
 	//Fraction drob5 = drob4 - drob1;
 	//cout << "\nПятая дробь, как разность четвертой и первой.\n";
 	//drob5.printFraction();
 	//drob5.printProperFraction();
-
+	//
 	////cout << "Шестая дробь.\n";
 	//Fraction drob6 = drob3 * drob2;
 	//cout << "\nШестая дробь, как произведение третьей и второй.\n";
 	//drob6.printFraction();
-
+	//
 	////cout << "Седьмая дробь.\n";
 	//Fraction drob7;
 	//drob7 = drob4 / drob5;
 	//cout << "\nСедьмая дробь, как частное четвертой и пятой.\n";
 	//drob7.printFraction();
-
+	//
 	//cout << "\nВосьмая дробь.\n";
 	//Fraction drob8(-200, -40);
 	//drob8.printFraction();
 	//cout << "сокращаем\n";
 	//drob8.reduceFraction();
 	//drob8.printFraction();
-
-	cout << "\nДевятая дробь, без дробной части.\n";
-	Fraction drob9(-200, -200);
-	drob9.printFraction();
-	drob9.printProperFraction();
-	cin >> drob9;
-	drob9.printFraction();
-	cout << drob3 <<"\n\n";
+	//
+	//cout << "\nДевятая дробь, без дробной части.\n";
+	//Fraction drob9(-200, -200);
+	//drob9.printFraction();
+	//drob9.printProperFraction();
+	//cin >> drob9;
+	//drob9.printFraction();
+	//cout << drob3 << "\n\n";
 }
