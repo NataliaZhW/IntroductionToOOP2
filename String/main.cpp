@@ -72,12 +72,12 @@ String operator +(const String& obg1, const String& obg2)
 	int i = 0;
 	for (; i < (obg1.getSize() - 1); i++) {
 		Result.setChar(obg1.getChar(i), i);
-		cout << obg1.getChar(i);
+		//cout << obg1.getChar(i);
 	}//setChar(char znak, int i)
 	for (; i < Result.getSize(); i++)
 	{
 		Result.setChar(obg2.getChar(i - obg1.getSize() + 1), i);
-		cout << obg2.getChar(i - obg1.getSize() + 1);
+		//cout << obg2.getChar(i - obg1.getSize() + 1);
 	}//setChar(char znak, int i)
 	cout << i << "\n";
 	Result.print();
@@ -111,9 +111,9 @@ int main()
 
 	String str3 = str1 + str2;
 	str3.print();
+	cout << "\n";
 	cout << str1 << endl;
 	cout << str2 << endl;
-	cout << "\n";
 	cout << str3 << endl;	//HelloWorld
 	cout << "\n";
 	//String str4(str1);
