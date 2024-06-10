@@ -120,15 +120,3 @@ int main()
 	//str4.print();
 	return 0;
 }
-
-
-
-//	//String str;
-//	//str.print();
-//
-//	String str1 = "Hello";
-//	String str2 = "World";
-//	
-//	String str3 = str1 + str2;
-//	
-//}
