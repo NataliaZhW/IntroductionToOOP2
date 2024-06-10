@@ -48,8 +48,34 @@ public:
 	}*/
 
 
-	int getSize() const { return size; };//количество полей
-	void setData(const char str) { this->data = data; }
+	int getSize() const { return size; };//количество полей	
+	void setData(const char* text) //Запись в поле, текст
+	{		
+		//  1 вариант, работает
+		if (this->size != strlen(text) + 1)
+			{
+				this->size = strlen(text) + 1;//определяем размер введенного текста		
+				delete[]this->data;
+				data = new char[size] {};
+			}				
+		strcpy_s(data, size, text);
+
+		////  2 вариант, работает, вспомогательная функция mySizeof(const char* text)
+		
+		//int a = mySizeof(text)+1;
+		//if (this->size != a)
+		//{
+		//	this->size = a;//определяем размер введенного текста		
+		//	delete[]this->data;
+		//	data = new char[size] {};
+		//}
+		//for (int i = 0; i < this->size; i++)//перезаписываем поле
+		//{
+		//	this->data[i] = text[i];
+		//	//cout << this->data[i];
+		//}	
+		////cout << "\n";
+	}
 	char getChar(int i) const { return data[i]; }// поле массива
 	void setChar(char znak, int i) { this->data[i] = znak; }//Запись одного знака
 
@@ -61,7 +87,16 @@ public:
 	char* printLight() const {
 		return data;
 	};
-
+	//int mySizeof(const char* text)//
+	//{
+	//	int tempSize1 = 0;
+	//	for (tempSize1 = 0; tempSize1 < sizeof(text); tempSize1++)
+	//	{
+	//		if (text[tempSize1] == '\0')
+	//			break;
+	//	}
+	//	return tempSize1;
+	//}
 };
 
 String operator +(const String& obg1, const String& obg2)
@@ -108,7 +143,10 @@ int main()
 	}*/
 	String str2("World");
 	str2.print();
+	str2.setData("55555");
+	str2.print();
 
+	
 	String str3 = str1 + str2;
 	str3.print();
 	cout << "\n";
