@@ -22,20 +22,17 @@ public:
 		this->size = size;
 		this->data = new char[size] {};
 		cout << "1ArgConstructop: \t" << this << " Size:\t" << this->size << "\t" << "Data: " << data << "\n";
-
-
 		//cout << "\nЗапустился 2 контруктор, принимает размер\n";
-
 	}
 	String(const char* str) {
-		cout << "\nЗапустился 3 контруктор, принимает строку, ограничивает длину строки\n";
+		cout << "\nЗапустился контруктор, принимает строку, ограничивает длину строки\n";
 		size = strlen(str) + 1;
 		data = new char[size] {};
 		strcpy_s(data, size, str);
 	}
 	String(const String& obg)
 	{
-		cout << "\nЗапустился 4 контруктор, копирования\n";
+		cout << "\nЗапустился контруктор копирования\n";
 		size = obg.size;
 		data = new char[size] {};//+ 1
 		strcpy_s(data, size, obg.data);
@@ -52,9 +49,9 @@ public:
 
 
 	int getSize() const { return size; };//количество полей
-	void setData(const char str) { this->data = data; };
-	char getChar(int i) const { return data[i]; };// поле массива
-	void setChar(char znak, int i) { this->data[i] = znak; };//Запись одного знака
+	void setData(const char str) { this->data = data; }
+	char getChar(int i) const { return data[i]; }// поле массива
+	void setChar(char znak, int i) { this->data[i] = znak; }//Запись одного знака
 
 	//				Methods:
 	void print() const {
@@ -98,9 +95,9 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	String str(80);
-	str.print();
-	cout << "\n";
+	//String str(80);
+	//str.print();
+	//cout << "\n";
 	String str1 = "Hello";
 	str1.print();
 	//str1.setChar('3', 0);
@@ -116,7 +113,9 @@ int main()
 	str3.print();
 	cout << str1 << endl;
 	cout << str2 << endl;
+	cout << "\n";
 	cout << str3 << endl;	//HelloWorld
+	cout << "\n";
 	//String str4(str1);
 	//str4.print();
 	return 0;
