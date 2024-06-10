@@ -38,7 +38,7 @@ public:
 	Fraction(double numeratorObg)
 	{
 		this->denominater = 1;
-		for (; (int)numeratorObg != numeratorObg; denominater *= 10, numeratorObg *= 10) {};
+		for (int i = 1; (int)numeratorObg != numeratorObg && i < 10; i++, denominater *= 10, numeratorObg *= 10) {};
 		numerator = (int)numeratorObg;//в этот момент уже нет дробной части
 		reduceFraction();
 		cout << "1ArgConstructop double: \t" << this << "\n";
@@ -77,7 +77,7 @@ public:
 	//Операторы
 	explicit operator int() const { return (int)(numerator / denominater); }
 	explicit operator double() const { return (double)numerator / (double)denominater; }
-	
+
 
 	Fraction& operator =(const Fraction& obg)
 	{
@@ -297,16 +297,32 @@ public:
 			numerator *= -1;
 			denominater *= -1;
 		}
-		//сокращаем
-		for (int i = 2; (i <= numerator && i <= denominater); i++)
-		{
-			if ((numerator % i == 0) && (denominater % i == 0))
+		//сокращаем по методу архимеда 
+		int more, less, rest;
+			if (numerator > denominater)more = numerator, less = denominater;
+			else more = denominater, less = numerator;
+			do
 			{
-				numerator /= i;
-				denominater /= i;
-				i = 1;
-			}
-		}
+				rest = more % less;
+				more = less;
+				less = rest;
+			} while (rest);
+			int GCD = more;	//GCD - Greatest Common Divesor
+			numerator /= GCD;
+			denominater /= GCD;
+			//return *this;
+		
+
+		////сокращаем
+		//for (int i = 2; (i <= numerator && i <= denominater); i++)
+		//{
+		//	if ((numerator % i == 0) && (denominater % i == 0))
+		//	{
+		//		numerator /= i;
+		//		denominater /= i;
+		//		i = 1;
+		//	}
+		//}
 		//Если подобных расчетов много, то можно создать массив простых чисел (побольше, чем в примере)
 		// arr[10]{2,3,5,7,11,13,17,19,23,29}
 		// в цикле проверять не все числа, а только простые примерно так:
@@ -585,7 +601,7 @@ int main()
 	cout << sizeof(int) << endl;
 	cout << sizeof(double) << endl;
 #endif // TYPE_CONVERSIONS_BASICS
-	
+
 #ifdef CONVERSIONS_FROM_OTHER_TO_CLASS
 	/*
 ----------------------------------
@@ -634,21 +650,23 @@ int main()
 	//drob1.printProperFraction();
 
 	Fraction drob2;
-	drob2 = Fraction(2.52);
+	double a3 = sqrt(2);
+	cout << a3 << "\n";
+	drob2 = Fraction(a3);
 	//drob2.printProperFraction();
 	drob2.printFraction();
 	int a1 = (int)drob2;
 	double d = (double)drob2;
 	cout << a1 << "\n";
 	cout << d << "\n";
-	cout << (double)2/3 << "\n";
+	cout << (double)2 / 3 << "\n";
 
 	//drob2 += drob1;
 	//drob2.printFraction();
 	////drob2.printProperFraction();
 	//Fraction drob3(2, 3);
 	//drob3.printFraction();
-    //
+	//
 	//drob2 /= drob3;
 	//drob2.printFraction();
 	//
