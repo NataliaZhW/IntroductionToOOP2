@@ -33,6 +33,7 @@ public:
 		data = new char[size] {};//+ 1
 		strcpy_s(data, size, obg.data);
 	}
+	//String(String&& obg) = delete;
 	String(String&& obg)
 	{
 		cout << "\nЗапустился контруктор присваивания\n";
@@ -83,6 +84,7 @@ public:
 	void setChar(char znak, int i) { this->data[i] = znak; }//Запись одного знака
 
 	//Операторы
+	//String& operator= (String&& obg) = delete;
 	String& operator= (const String& obg)
 	{
 		cout << "\nЗапустился оператор копирования\n";
