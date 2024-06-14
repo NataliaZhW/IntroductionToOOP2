@@ -10,20 +10,16 @@ private:
 	int size;//Размер строки в Байтах
 	char* data;//Адрес строки в динамической памяти	
 public:
-	//			Constructors:
+	// Constructors:
 	String()
 	{
 		cout << "\nЗапустился 1 контруктор по умолчанию\n";
 		int size{ 80 };
 		char* data = new char[size] {};
 	}
-	String(int size)
-	{
-		this->size = size;
-		this->data = new char[size] {};
-		cout << "1ArgConstructop: \t" << this << " Size:\t" << this->size << "\t" << "Data: " << data << "\n";
-		//cout << "\nЗапустился 2 контруктор, принимает размер\n";
-	}
+	String(int sizeTemp) : size(sizeTemp) { this->data = new char[size] {}; }
+	//	cout << "1ArgConstructop: \t" << this << " Size:\t" << this->size << "\t" << "Data: " << data << "\n";
+	//	cout << "\nЗапустился контруктор, принимает размер\n";
 	String(const char* str) {
 		cout << "\nЗапустился контруктор, принимает строку, ограничивает длину строки\n";
 		size = strlen(str) + 1;
@@ -37,6 +33,13 @@ public:
 		data = new char[size] {};//+ 1
 		strcpy_s(data, size, obg.data);
 	}
+	String(String&& obg)
+	{
+		cout << "\nЗапустился контруктор присваивания\n";
+		size = obg.size;
+		data = obg.data;
+		obg.data = nullptr;
+	}
 	~String()
 	{
 		delete[] this->data;
@@ -47,21 +50,21 @@ public:
 		cin.getline(data, size + 1);
 	}*/
 
-
+	// Геттеры Сеттеры
 	int getSize() const { return size; };//количество полей	
 	void setData(const char* text) //Запись в поле, текст
-	{		
+	{
 		//  1 вариант, работает
 		if (this->size != strlen(text) + 1)
-			{
-				this->size = strlen(text) + 1;//определяем размер введенного текста		
-				delete[]this->data;
-				data = new char[size] {};
-			}				
+		{
+			this->size = strlen(text) + 1;//определяем размер введенного текста		
+			delete[]this->data;
+			data = new char[size] {};
+		}
 		strcpy_s(data, size, text);
 
 		////  2 вариант, работает, вспомогательная функция mySizeof(const char* text)
-		
+
 		//int a = mySizeof(text)+1;
 		//if (this->size != a)
 		//{
@@ -78,6 +81,35 @@ public:
 	}
 	char getChar(int i) const { return data[i]; }// поле массива
 	void setChar(char znak, int i) { this->data[i] = znak; }//Запись одного знака
+
+	//Операторы
+	String& operator= (const String& obg)
+	{
+		cout << "\nЗапустился оператор копирования\n";
+		if (this == &obg) return *this;
+		if (this->size != obg.size)
+		{
+			delete[] data;
+			this->size = obg.size;
+			this->data = new char[size] {};
+		}
+		strcpy_s(this->data, this->size, obg.data);
+		return *this;
+	}
+	String& operator= (String&& obg)
+	{
+		cout << "\nЗапустился оператор присваивания\n";
+		if (this == &obg) return *this;
+		delete[] data;
+		this->size = obg.size;
+		this->data = obg.data;
+		obg.data = nullptr;
+		return *this;
+	}
+
+	char& operator[](const int& i) { return data[i]; }
+	const char& operator[](const int& i) const { return data[i]; }
+
 
 	//				Methods:
 	void print() const {
@@ -108,12 +140,15 @@ String operator +(const String& obg1, const String& obg2)
 	for (; i < (obg1.getSize() - 1); i++) {
 		Result.setChar(obg1.getChar(i), i);
 		//cout << obg1.getChar(i);
-	}//setChar(char znak, int i)
+	}
+	//setChar(char znak, int i)
 	for (; i < Result.getSize(); i++)
 	{
 		Result.setChar(obg2.getChar(i - obg1.getSize() + 1), i);
 		//cout << obg2.getChar(i - obg1.getSize() + 1);
-	}//setChar(char znak, int i)
+	}
+	//setChar(char znak, int i)
+	//cout << "Конкатенация: \t\t" << &Result << "\n";
 	cout << i << "\n";
 	Result.print();
 	return Result;
@@ -123,9 +158,20 @@ std::ostream& operator << (std::ostream& os, const String& obg)
 	os << obg.printLight();
 	return os;
 }
+String factoryString(int size)
+{
+	cout << "Factory\n";
+	String A(size);
+	char* temp = new char[size + 1] {};
+	for (int i = 0; i < size; i++)
+	{
+		temp[i] = 't';
+	}
+	temp[size] = '\0';
 
-//cout << "Конкатенация: \t\t" << &Result << "\n";
-
+	A.setData(temp);
+	return A;
+}
 int main()
 {
 	setlocale(LC_ALL, "Russian");
@@ -146,7 +192,7 @@ int main()
 	str2.setData("55555");
 	str2.print();
 
-	
+
 	String str3 = str1 + str2;
 	str3.print();
 	cout << "\n";
@@ -154,7 +200,16 @@ int main()
 	cout << str2 << endl;
 	cout << str3 << endl;	//HelloWorld
 	cout << "\n";
-	//String str4(str1);
-	//str4.print();
+	String str4 = str1;
+	str4.print();
+	str4 = str2;
+	str4.print();
+
+	cout << "\n";
+	String str5 = factoryString(4);
+	str5.print();
+	str4 = str2;
+	str4.print();
+
 	return 0;
 }

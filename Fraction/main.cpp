@@ -37,9 +37,20 @@ public:
 	}
 	Fraction(double numeratorObg)
 	{
-		this->denominater = 1;
-		for (int i = 1; (int)numeratorObg != numeratorObg && i < 10; i++, denominater *= 10, numeratorObg *= 10) {};
-		numerator = (int)numeratorObg;//в этот момент уже нет дробной части
+		this->denominater = 1e+7;
+		numerator = denominater *numeratorObg;
+		cout << (int)1e+9 << "\n";
+		
+		//this->denominater = 1;		
+		//for (int i = 1; (int)numeratorObg != numeratorObg && i < 10; i++, denominater *= 10, numeratorObg *= 10) {};
+		//// тоже самое, чтобы посмотреть расчеты в отладчике
+		///*for (int i = 1; (int)numeratorObg != numeratorObg && i < 10; )
+		//{
+		//	i++;
+		//	denominater *= 10;
+		//	numeratorObg *= 10;
+		//};*/
+		//numerator = (int)numeratorObg;//в этот момент уже нет дробной части
 		reduceFraction();
 		cout << "1ArgConstructop double: \t" << this << "\n";
 	}
@@ -514,7 +525,7 @@ std::istream& operator >> (std::istream& is, Fraction& obg)
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERSIONS_FROM_OTHER_TO_CLASS
 //#define CONVERSIONS_FROM_CLASS_TO_OTHER
-#define CONVERSIONS_TASK_1
+//#define CONVERSIONS_TASK_1
 #define CONVERSIONS_TASK_2
 
 
@@ -639,7 +650,7 @@ int main()
 #endif // CONVERSIONS_TASK_1
 
 #ifdef CONVERSIONS_TASK_2
-	Fraction B = 2.75;
+	Fraction B = 2.76;
 	cout << B << endl;
 #endif // CONVERSIONS_TASK_2
 
