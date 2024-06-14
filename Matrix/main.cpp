@@ -1,5 +1,5 @@
-//заполнение матрицы с клавиатуры????
-//арифметические операции(+, –, *), поиск максимального и минимального элемента.*/
+п»ї//Р·Р°РїРѕР»РЅРµРЅРёРµ РјР°С‚СЂРёС†С‹ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹????
+//Р°СЂРёС„РјРµС‚РёС‡РµСЃРєРёРµ РѕРїРµСЂР°С†РёРё(+, вЂ“, *), РїРѕРёСЃРє РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ Рё РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°.*/
 
 #include <iostream>
 #include <iomanip>
@@ -14,13 +14,13 @@ class Matrix
 public:
 	Matrix()
 	{
-		cout << "\nЗапустился конcтруктор по умолчанию " << this << "\n";
+		cout << "\nР—Р°РїСѓСЃС‚РёР»СЃСЏ РєРѕРЅcС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ " << this << "\n";
 		this->str = 0;
 		this->col = 0;
 		this->mass = nullptr;
 	}
 	Matrix(int str, int col) {
-		cout << "\nЗапустился конcтруктор с параметрами " << this << "\n";
+		cout << "\nР—Р°РїСѓСЃС‚РёР»СЃСЏ РєРѕРЅcС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё " << this << "\n";
 		this->str = str;
 		this->col = col;
 		this->mass = new int* [str];
@@ -31,7 +31,7 @@ public:
 	}
 	Matrix(const Matrix& obg)
 	{
-		cout << "\nЗапустился конcтруктор копирования " << this << "\n";
+		cout << "\nР—Р°РїСѓСЃС‚РёР»СЃСЏ РєРѕРЅcС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ " << this << "\n";
 		this->str = obg.str;
 		this->col = obg.col;
 		this->mass = new int* [str];
@@ -44,29 +44,29 @@ public:
 		}
 	}
 	~Matrix() {
-		cout << "\nЗапустился деструктор " << this << "\n";
+		cout << "\nР—Р°РїСѓСЃС‚РёР»СЃСЏ РґРµСЃС‚СЂСѓРєС‚РѕСЂ " << this << "\n";
 		for (int i = 0; i < str; i++) {
 			delete[]mass[i];
 		}
 		delete[]mass;
 	};
 
-	// Геттеры и сеттеры
+	// Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
 	int getStr() const { return str; }
 	int getCol() const { return col; }
 	int getMass(int str, int col) const { return mass[str][col]; }
 	void setMass(int str, int col, int data) { mass[str][col] = data; }
 
-	// Операторы
+	// РћРїРµСЂР°С‚РѕСЂС‹
 	Matrix& operator =(const Matrix& obg)
 	{
-		if (this == &obg) return *this;//проверка на самого себя
-		if (this->str != obg.str) //Проверка на равенство строк
+		if (this == &obg) return *this;//РїСЂРѕРІРµСЂРєР° РЅР° СЃР°РјРѕРіРѕ СЃРµР±СЏ
+		if (this->str != obg.str) //РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ СЃС‚СЂРѕРє
 		{
-			// удаляем память
+			// СѓРґР°Р»СЏРµРј РїР°РјСЏС‚СЊ
 			for (int i = 0; i < this->str; i++) { delete[]mass[i]; }
 			delete[]mass;
-			// выделяем новую память
+			// РІС‹РґРµР»СЏРµРј РЅРѕРІСѓСЋ РїР°РјСЏС‚СЊ
 			this->str = obg.str;
 			this->col = obg.col;
 			this->mass = new int* [this->str];
@@ -81,11 +81,11 @@ public:
 		}
 		else
 		{
-			if (this->str != obg.str) //Проверка на равенство столбцы
+			if (this->str != obg.str) //РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ СЃС‚РѕР»Р±С†С‹
 			{
-				// удаляем память (часть)
+				// СѓРґР°Р»СЏРµРј РїР°РјСЏС‚СЊ (С‡Р°СЃС‚СЊ)
 				for (int i = 0; i < this->str; i++) { delete[]mass[i]; }
-				// выделяем новую память
+				// РІС‹РґРµР»СЏРµРј РЅРѕРІСѓСЋ РїР°РјСЏС‚СЊ
 				this->col = obg.col;
 				for (int i = 0; i < this->str; i++) {
 					mass[i] = new int[this->col] {};
@@ -107,21 +107,21 @@ public:
 		return *this;
 	}
 
-	// Методы
-	// Вывод на экран
+	// РњРµС‚РѕРґС‹
+	// Р’С‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
 	void printMatrix()
 	{
 		for (int i = 0; i < str; i++) {
 			for (int j = 0; j < col; j++) {
-				cout << setw(6) << this->mass[i][j]; //6 мест на вывод числа
+				cout << setw(6) << this->mass[i][j]; //6 РјРµСЃС‚ РЅР° РІС‹РІРѕРґ С‡РёСЃР»Р°
 			}
 			cout << endl;
 		}
 		cout << endl;
 	}
-	// Заполнение случайными числами
+	// Р—Р°РїРѕР»РЅРµРЅРёРµ СЃР»СѓС‡Р°Р№РЅС‹РјРё С‡РёСЃР»Р°РјРё
 	void inicialis() {
-		cout << "\nЗаполнение случайными числами " << this << "\n";
+		cout << "\nР—Р°РїРѕР»РЅРµРЅРёРµ СЃР»СѓС‡Р°Р№РЅС‹РјРё С‡РёСЃР»Р°РјРё " << this << "\n";
 
 		for (int i = 0; i < this->str; i++)
 		{
@@ -162,12 +162,12 @@ public:
 		return min;
 	}
 
-	//Консруктор с оператором
+	//РљРѕРЅСЃСЂСѓРєС‚РѕСЂ СЃ РѕРїРµСЂР°С‚РѕСЂРѕРј
 	//Matrix(Matrix& mat1, Matrix& mat2, char oper) {
-	//	cout << "\nЗапустился конcтруктор с оператором " << this << "\n";
+	//	cout << "\nР—Р°РїСѓСЃС‚РёР»СЃСЏ РєРѕРЅcС‚СЂСѓРєС‚РѕСЂ СЃ РѕРїРµСЂР°С‚РѕСЂРѕРј " << this << "\n";
 	//	if (typeid(mat1.mass).name() != typeid(mat2.mass).name())
 	//	{
-	//		cout << "\nТипы матриц не совпадают \n";
+	//		cout << "\nРўРёРїС‹ РјР°С‚СЂРёС† РЅРµ СЃРѕРІРїР°РґР°СЋС‚ \n";
 	//	}
 	//	else
 	//		switch (oper) {
@@ -175,7 +175,7 @@ public:
 	//		{
 	//			if (mat1.str != mat2.str && mat1.col != mat2.col)
 	//			{
-	//				cout << "\nТипы матриц не совпадают \n";
+	//				cout << "\nРўРёРїС‹ РјР°С‚СЂРёС† РЅРµ СЃРѕРІРїР°РґР°СЋС‚ \n";
 	//			}
 	//			else
 	//			{
@@ -197,7 +197,7 @@ public:
 	//		{
 	//			if (mat1.str != mat2.str && mat1.col != mat2.col)
 	//			{
-	//				cout << "\nТипы матриц не совпадают \n";
+	//				cout << "\nРўРёРїС‹ РјР°С‚СЂРёС† РЅРµ СЃРѕРІРїР°РґР°СЋС‚ \n";
 	//			}
 	//			else
 	//			{
@@ -219,7 +219,7 @@ public:
 	//		{
 	//			if (mat1.str != mat2.col && mat1.col != mat2.str)
 	//			{
-	//				cout << "\nТипы матриц не совпадают \n";
+	//				cout << "\nРўРёРїС‹ РјР°С‚СЂРёС† РЅРµ СЃРѕРІРїР°РґР°СЋС‚ \n";
 	//			}
 	//			else
 	//			{
@@ -244,7 +244,7 @@ public:
 	//		}
 	//		default:
 	//		{
-	//			cout << "\nНеизвестный оператор \n";
+	//			cout << "\nРќРµРёР·РІРµСЃС‚РЅС‹Р№ РѕРїРµСЂР°С‚РѕСЂ \n";
 	//			break;
 	//		}
 	//		}
@@ -255,10 +255,10 @@ Matrix operator+ (const Matrix& mat1, const Matrix& mat2)
 {
 	cout << "+Assigment: \t\t" << "\n"; // << &temp 
 	Matrix temp(mat1.getStr(), mat1.getCol());
-	// + по математическому правилу
+	// + РїРѕ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРѕРјСѓ РїСЂР°РІРёР»Сѓ
 	if (mat1.getStr() != mat2.getStr() && mat1.getCol() != mat2.getCol())
 	{
-		cout << "\nТипы матриц не совпадают \n";
+		cout << "\nРўРёРїС‹ РјР°С‚СЂРёС† РЅРµ СЃРѕРІРїР°РґР°СЋС‚ \n";
 	}
 	else
 	{
@@ -275,10 +275,10 @@ Matrix operator- (const Matrix& mat1, const Matrix& mat2)
 {
 	cout << "-Assigment: \t\t" << "\n";// << &temp 
 	Matrix temp(mat1.getStr(), mat1.getCol());
-	// + по математическому правилу
+	// + РїРѕ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРѕРјСѓ РїСЂР°РІРёР»Сѓ
 	if (mat1.getStr() != mat2.getStr() && mat1.getCol() != mat2.getCol())
 	{
-		cout << "\nТипы матриц не совпадают \n";
+		cout << "\nРўРёРїС‹ РјР°С‚СЂРёС† РЅРµ СЃРѕРІРїР°РґР°СЋС‚ \n";
 	}
 	else
 	{
@@ -295,10 +295,10 @@ Matrix operator* (const Matrix& mat1, const Matrix& mat2)
 {
 	cout << "*Assigment: \t\t" << "\n";// << &temp 
 	Matrix temp(mat1.getStr(), mat2.getCol());
-	// + по математическому правилу
+	// + РїРѕ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРѕРјСѓ РїСЂР°РІРёР»Сѓ
 	if (mat1.getStr() != mat2.getCol() && mat1.getCol() != mat2.getStr())
 	{
-		cout << "\nТипы матриц не совпадают \n";
+		cout << "\nРўРёРїС‹ РјР°С‚СЂРёС† РЅРµ СЃРѕРІРїР°РґР°СЋС‚ \n";
 	}
 	else
 	{
@@ -321,25 +321,25 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	Matrix a(4, 4);// создаем новый объект
-	a.printMatrix();// выводим объект
-	a.inicialis();// заполняем случайными числами
-	a.printMatrix();// выводим объект
-	Matrix a1 = a;// создаем новый объект
-	a1.printMatrix();// выводим объект
-	cout << "\nМаксимум " << a.max() << " \n";
-	cout << "\nМинимум " << a.min() << " \n";
-	Matrix b(4, 4);// создаем новый объект
-	b.inicialis();// заполняем случайными числами
-	b.printMatrix();// выводим объект
-	Matrix c1 = a + b; // суммирование
-	//Matrix c1(a, b, '+'); // суммирование
+	Matrix a(4, 4);// СЃРѕР·РґР°РµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚
+	a.printMatrix();// РІС‹РІРѕРґРёРј РѕР±СЉРµРєС‚
+	a.inicialis();// Р·Р°РїРѕР»РЅСЏРµРј СЃР»СѓС‡Р°Р№РЅС‹РјРё С‡РёСЃР»Р°РјРё
+	a.printMatrix();// РІС‹РІРѕРґРёРј РѕР±СЉРµРєС‚
+	Matrix a1 = a;// СЃРѕР·РґР°РµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚
+	a1.printMatrix();// РІС‹РІРѕРґРёРј РѕР±СЉРµРєС‚
+	cout << "\nРњР°РєСЃРёРјСѓРј " << a.max() << " \n";
+	cout << "\nРњРёРЅРёРјСѓРј " << a.min() << " \n";
+	Matrix b(4, 4);// СЃРѕР·РґР°РµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚
+	b.inicialis();// Р·Р°РїРѕР»РЅСЏРµРј СЃР»СѓС‡Р°Р№РЅС‹РјРё С‡РёСЃР»Р°РјРё
+	b.printMatrix();// РІС‹РІРѕРґРёРј РѕР±СЉРµРєС‚
+	Matrix c1 = a + b; // СЃСѓРјРјРёСЂРѕРІР°РЅРёРµ
+	//Matrix c1(a, b, '+'); // СЃСѓРјРјРёСЂРѕРІР°РЅРёРµ
 	c1.printMatrix();
-	Matrix c2 = a - b; // разность
-	//Matrix c2(a, b, '-'); // разность
+	Matrix c2 = a - b; // СЂР°Р·РЅРѕСЃС‚СЊ
+	//Matrix c2(a, b, '-'); // СЂР°Р·РЅРѕСЃС‚СЊ
 	c2.printMatrix();
-	Matrix c3 = a * b; // умножаем
-	//Matrix c3(a, b, '*'); // умножаем
+	Matrix c3 = a * b; // СѓРјРЅРѕР¶Р°РµРј
+	//Matrix c3(a, b, '*'); // СѓРјРЅРѕР¶Р°РµРј
 	c3.printMatrix();
 
 
