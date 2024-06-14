@@ -80,6 +80,8 @@ public:
 		//}	
 		////cout << "\n";
 	}
+	const char* getData() const { return data; };
+	char* getData() { return data; };
 	char getChar(int i) const { return data[i]; }// поле массива
 	void setChar(char znak, int i) { this->data[i] = znak; }//Запись одного знака
 
@@ -118,9 +120,6 @@ public:
 		cout << "Size:\t" << this->size << "\t";
 		cout << "Data: " << data << "\n";
 	};
-	char* printLight() const {
-		return data;
-	};
 	//int mySizeof(const char* text)//
 	//{
 	//	int tempSize1 = 0;
@@ -157,7 +156,7 @@ String operator +(const String& obg1, const String& obg2)
 }
 std::ostream& operator << (std::ostream& os, const String& obg)
 {
-	os << obg.printLight();
+	os << obg.getData();
 	return os;
 }
 String factoryString(int size)
