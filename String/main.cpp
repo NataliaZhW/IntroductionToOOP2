@@ -11,27 +11,28 @@ private:
 	char* data;//Адрес строки в динамической памяти	
 public:
 	// Constructors:
-	String()
+	String() : size(80), data(new char[size] {})
 	{
 		cout << "\nЗапустился 1 контруктор по умолчанию\n";
-		int size{ 80 };
-		char* data = new char[size] {};
+		//int size{ 80 };
+		//char* data = new char[size] {};
 	}
-	String(int sizeTemp) : size(sizeTemp) { this->data = new char[size] {}; }
+	String(int sizeTemp) : size(sizeTemp), data(new char[size] {}) {}
 	//	cout << "1ArgConstructop: \t" << this << " Size:\t" << this->size << "\t" << "Data: " << data << "\n";
 	//	cout << "\nЗапустился контруктор, принимает размер\n";
-	String(const char* str) {
+	String(const char* str) : size(strlen(str) + 1), data(new char[size] {})
+	{
 		cout << "\nЗапустился контруктор, принимает строку, ограничивает длину строки\n";
-		size = strlen(str) + 1;
-		data = new char[size] {};
+		//size = strlen(str) + 1;
+		//data = new char[size] {};
 		strcpy_s(data, size, str);
 	}
-	String(const String& obg)
+	String(const String& obg): String(obg.data)
 	{
 		cout << "\nЗапустился контруктор копирования\n";
-		size = obg.size;
-		data = new char[size] {};//+ 1
-		strcpy_s(data, size, obg.data);
+		//size = obg.size;
+		//data = new char[size] {};//+ 1
+		//strcpy_s(data, size, obg.data);
 	}
 	//String(String&& obg) = delete;
 	String(String&& obg)
@@ -173,6 +174,9 @@ String factoryString(int size)
 	A.setData(temp);
 	return A;
 }
+
+#define CAT_CHECK
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
