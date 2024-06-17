@@ -161,94 +161,6 @@ public:
 		}
 		return min;
 	}
-
-	//Консруктор с оператором
-	//Matrix(Matrix& mat1, Matrix& mat2, char oper) {
-	//	cout << "\nЗапустился конcтруктор с оператором " << this << "\n";
-	//	if (typeid(mat1.mass).name() != typeid(mat2.mass).name())
-	//	{
-	//		cout << "\nТипы матриц не совпадают \n";
-	//	}
-	//	else
-	//		switch (oper) {
-	//		case '+':
-	//		{
-	//			if (mat1.str != mat2.str && mat1.col != mat2.col)
-	//			{
-	//				cout << "\nТипы матриц не совпадают \n";
-	//			}
-	//			else
-	//			{
-	//				this->str = mat1.str;
-	//				this->col = mat1.col;
-	//				this->mass = new int* [str];
-	//				for (int i = 0; i < str; i++) {
-	//					mass[i] = new int[col] {};
-	//					for (int j = 0; j < col; j++)
-	//					{
-	//						mass[i][j] = mat1.mass[i][j] + mat2.mass[i][j];
-	//					}
-	//				}
-	//			}
-	//			break;
-	//		}
-	//
-	//		case '-':
-	//		{
-	//			if (mat1.str != mat2.str && mat1.col != mat2.col)
-	//			{
-	//				cout << "\nТипы матриц не совпадают \n";
-	//			}
-	//			else
-	//			{
-	//				this->str = mat1.str;
-	//				this->col = mat1.col;
-	//				this->mass = new int* [str];
-	//				for (int i = 0; i < str; i++) {
-	//					mass[i] = new int[col] {};
-	//					for (int j = 0; j < col; j++)
-	//					{
-	//						mass[i][j] = mat1.mass[i][j] - mat2.mass[i][j];
-	//					}
-	//				}
-	//			}
-	//			break;
-	//		}
-	//
-	//		case '*':
-	//		{
-	//			if (mat1.str != mat2.col && mat1.col != mat2.str)
-	//			{
-	//				cout << "\nТипы матриц не совпадают \n";
-	//			}
-	//			else
-	//			{
-	//				this->str = mat1.str;
-	//				this->col = mat2.col;
-	//				this->mass = new int* [str];
-	//				for (int i = 0; i < str; i++) {
-	//					mass[i] = new int[col] {};
-	//				}
-	//				for (int i = 0; i < str; i++)
-	//				{
-	//					for (int j = 0; j < mat2.str; j++)
-	//					{
-	//						for (int k = 0; k < col; k++)
-	//						{
-	//							this->mass[i][j] += mat1.mass[i][k] * mat2.mass[k][j];
-	//						}
-	//					}
-	//				}
-	//				break;
-	//			}
-	//		}
-	//		default:
-	//		{
-	//			cout << "\nНеизвестный оператор \n";
-	//			break;
-	//		}
-	//		}
-	//}
 };
 
 Matrix operator+ (const Matrix& mat1, const Matrix& mat2)
@@ -333,13 +245,10 @@ int main()
 	b.inicialis();// заполняем случайными числами
 	b.printMatrix();// выводим объект
 	Matrix c1 = a + b; // суммирование
-	//Matrix c1(a, b, '+'); // суммирование
 	c1.printMatrix();
 	Matrix c2 = a - b; // разность
-	//Matrix c2(a, b, '-'); // разность
 	c2.printMatrix();
 	Matrix c3 = a * b; // умножаем
-	//Matrix c3(a, b, '*'); // умножаем
 	c3.printMatrix();
 
 
