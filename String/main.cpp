@@ -11,126 +11,124 @@ private:
 	char* data;//Адрес строки в динамической памяти	
 public:
 	// Constructors:
-	String() : size(80), data(new char[size] {})
-	{
-		cout << "\nЗапустился 1 контруктор по умолчанию\n";
-		//int size{ 80 };
-		//char* data = new char[size] {};
-	}
-	String(int sizeTemp) : size(sizeTemp), data(new char[size] {}) {}
-	//	cout << "1ArgConstructop: \t" << this << " Size:\t" << this->size << "\t" << "Data: " << data << "\n";
-	//	cout << "\nЗапустился контруктор, принимает размер\n";
-	String(const char* str) : size(strlen(str) + 1), data(new char[size] {})
-	{
-		cout << "\nЗапустился контруктор, принимает строку, ограничивает длину строки\n";
-		//size = strlen(str) + 1;
-		//data = new char[size] {};
-		strcpy_s(data, size, str);
-	}
-	String(const String& obg): String(obg.data)
-	{
-		cout << "\nЗапустился контруктор копирования\n";
-		//size = obg.size;
-		//data = new char[size] {};//+ 1
-		//strcpy_s(data, size, obg.data);
-	}
-	//String(String&& obg) = delete;
-	String(String&& obg)
-	{
-		cout << "\nЗапустился контруктор присваивания\n";
-		size = obg.size;
-		data = obg.data;
-		obg.data = nullptr;
-	}
-	~String()
-	{
-		delete[] this->data;
-		cout << "Destructor:\t\t" << this << endl;
-	}
-	/*void input() {
-		cout << "Введите строку: ";
-		cin.getline(data, size + 1);
-	}*/
-
+	String();
+	String(int sizeTemp);
+	String(const char* str);
+	String(const String& obg);
+	
+	String(String&& obg);
+	~String();
+	
 	// Геттеры Сеттеры
-	int getSize() const { return size; };//количество полей	
-	void setData(const char* text) //Запись в поле, текст
-	{
-		//  1 вариант, работает
-		if (this->size != strlen(text) + 1)
-		{
-			this->size = strlen(text) + 1;//определяем размер введенного текста		
-			delete[]this->data;
-			data = new char[size] {};
-		}
-		strcpy_s(data, size, text);
-
-		////  2 вариант, работает, вспомогательная функция mySizeof(const char* text)
-
-		//int a = mySizeof(text)+1;
-		//if (this->size != a)
-		//{
-		//	this->size = a;//определяем размер введенного текста		
-		//	delete[]this->data;
-		//	data = new char[size] {};
-		//}
-		//for (int i = 0; i < this->size; i++)//перезаписываем поле
-		//{
-		//	this->data[i] = text[i];
-		//	//cout << this->data[i];
-		//}	
-		////cout << "\n";
-	}
-	const char* getData() const { return data; };
-	char* getData() { return data; };
-	char getChar(int i) const { return data[i]; }// поле массива
-	void setChar(char znak, int i) { this->data[i] = znak; }//Запись одного знака
+	int getSize() const ;//количество полей	
+	void setData(const char* text);
+	const char* getData() const;
+	char* getData();
+	char getChar(int i) const;// поле массива
+	void setChar(char znak, int i);//Запись одного знака
 
 	//Операторы
-	//String& operator= (String&& obg) = delete;
-	String& operator= (const String& obg)
-	{
-		cout << "\nЗапустился оператор копирования\n";
-		if (this == &obg) return *this;
-		if (this->size != obg.size)
-		{
-			delete[] data;
-			this->size = obg.size;
-			this->data = new char[size] {};
-		}
-		strcpy_s(this->data, this->size, obg.data);
-		return *this;
-	}
-	String& operator= (String&& obg)
-	{
-		cout << "\nЗапустился оператор присваивания\n";
-		if (this == &obg) return *this;
-		delete[] data;
-		this->size = obg.size;
-		this->data = obg.data;
-		obg.data = nullptr;
-		return *this;
-	}
+	String& operator= (const String& obg);
+	String& operator= (String&& obg);
 
-	char& operator[](const int& i) { return data[i]; }
-	const char& operator[](const int& i) const { return data[i]; }
+	char& operator[](const int& i);
+	const char& operator[](const int& i) const;
 
 
 	//				Methods:
-	void print() const {
-		cout << "Size:\t" << this->size << "\t";
-		cout << "Data: " << data << "\n";
-	};
-	//int mySizeof(const char* text)//
-	//{
-	//	int tempSize1 = 0;
-	//	for (tempSize1 = 0; tempSize1 < sizeof(text); tempSize1++)
-	//	{
-	//		if (text[tempSize1] == '\0')
-	//			break;
-	//	}
-	//	return tempSize1;
-	//}
+	void print() const;
+};
+
+
+// Constructors:
+String::String() : size(80), data(new char[size] {})
+{
+	cout << "\nЗапустился 1 контруктор по умолчанию\n";
+	//int size{ 80 };
+	//char* data = new char[size] {};
+}
+String::String(int sizeTemp) : size(sizeTemp), data(new char[size] {}) {}
+//	cout << "1ArgConstructop: \t" << this << " Size:\t" << this->size << "\t" << "Data: " << data << "\n";
+//	cout << "\nЗапустился контруктор, принимает размер\n";
+String::String(const char* str) : size(strlen(str) + 1), data(new char[size] {})
+{
+	cout << "\nЗапустился контруктор, принимает строку, ограничивает длину строки\n";
+	//size = strlen(str) + 1;
+	//data = new char[size] {};
+	strcpy_s(data, size, str);
+}
+String::String(const String& obg) : String(obg.data)
+{
+	cout << "\nЗапустился контруктор копирования\n";
+	//size = obg.size;
+	//data = new char[size] {};//+ 1
+	//strcpy_s(data, size, obg.data);
+}
+String::String(String&& obg)
+{
+	cout << "\nЗапустился контруктор присваивания\n";
+	size = obg.size;
+	data = obg.data;
+	obg.data = nullptr;
+}
+String::~String()
+{
+	delete[] this->data;
+	cout << "Destructor:\t\t" << this << endl;
+}
+
+// Геттеры Сеттеры
+int String::getSize() const { return size; };//количество полей	
+void String::setData(const char* text) //Запись в поле, текст
+{
+	//  1 вариант, работает
+	if (this->size != strlen(text) + 1)
+	{
+		this->size = strlen(text) + 1;//определяем размер введенного текста		
+		delete[]this->data;
+		data = new char[size] {};
+	}
+	strcpy_s(data, size, text);
+}
+const char* String::getData() const { return data; };
+char* String::getData() { return data; };
+char String::getChar(int i) const { return data[i]; }// поле массива
+void String::setChar(char znak, int i) { this->data[i] = znak; }//Запись одного знака
+
+//Операторы
+//String& operator= (String&& obg) = delete;
+String& String::operator= (const String& obg)
+{
+	cout << "\nЗапустился оператор копирования\n";
+	if (this == &obg) return *this;
+	if (this->size != obg.size)
+	{
+		delete[] data;
+		this->size = obg.size;
+		this->data = new char[size] {};
+	}
+	strcpy_s(this->data, this->size, obg.data);
+	return *this;
+}
+String& String::operator= (String&& obg)
+{
+	cout << "\nЗапустился оператор присваивания\n";
+	if (this == &obg) return *this;
+	delete[] data;
+	this->size = obg.size;
+	this->data = obg.data;
+	obg.data = nullptr;
+	return *this;
+}
+
+char& String::operator[](const int& i) { return data[i]; }
+const char& String::operator[](const int& i) const { return data[i]; }
+
+
+//				Methods:
+void String::print() const {
+	cout << "Size:\t" << this->size << "\t";
+	cout << "Data: " << data << "\n";
 };
 
 String operator +(const String& obg1, const String& obg2)
