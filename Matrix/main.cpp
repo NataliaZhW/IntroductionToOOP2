@@ -16,7 +16,7 @@ public:
 		this->col = 0;
 		this->mass = nullptr;
 	}*/
-	Matrix(int str=0, int col=0) {
+	Matrix(int str = 0, int col = 0) {
 		cout << "\nЗапустился конcтруктор с 2 параметрами " << this << "\n";
 		this->str = str;
 		this->col = col;
@@ -65,7 +65,7 @@ public:
 			//for (int i = 0; i < this->str; i++) { delete[]mass[i]; }
 			//delete[]mass;
 			// выделяем новую память
-			
+
 			this->str = obg.str;
 			this->col = obg.col;
 			this->mass = new int* [this->str];
