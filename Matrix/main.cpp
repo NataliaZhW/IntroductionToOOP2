@@ -1,7 +1,4 @@
-﻿//заполнение матрицы с клавиатуры????
-//арифметические операции(+, –, *), поиск максимального и минимального элемента.*/
-
-#include <iostream>
+﻿#include <iostream>
 #include <iomanip>
 
 using namespace std;
@@ -12,15 +9,15 @@ class Matrix
 	int col = 0;
 	int** mass = nullptr;
 public:
-	Matrix()
+	/*Matrix()
 	{
 		cout << "\nЗапустился конcтруктор по умолчанию " << this << "\n";
 		this->str = 0;
 		this->col = 0;
 		this->mass = nullptr;
-	}
-	Matrix(int str, int col) {
-		cout << "\nЗапустился конcтруктор с параметрами " << this << "\n";
+	}*/
+	Matrix(int str=0, int col=0) {
+		cout << "\nЗапустился конcтруктор с 2 параметрами " << this << "\n";
 		this->str = str;
 		this->col = col;
 		this->mass = new int* [str];
@@ -29,14 +26,14 @@ public:
 			mass[i] = new int[col] {};
 		}
 	}
-	Matrix(const Matrix& obg)
+	Matrix(const Matrix& obg) :Matrix(obg.str, obg.col)
 	{
 		cout << "\nЗапустился конcтруктор копирования " << this << "\n";
-		this->str = obg.str;
-		this->col = obg.col;
-		this->mass = new int* [str];
+		//this->str = obg.str;
+		//this->col = obg.col;
+		//this->mass = new int* [str];
 		for (int i = 0; i < str; i++) {
-			mass[i] = new int[col] {};
+			//mass[i] = new int[col] {};
 			for (int j = 0; j < col; j++)
 			{
 				mass[i][j] = obg.mass[i][j];
@@ -64,9 +61,11 @@ public:
 		if (this->str != obg.str) //Проверка на равенство строк
 		{
 			// удаляем память
-			for (int i = 0; i < this->str; i++) { delete[]mass[i]; }
-			delete[]mass;
+			this->~Matrix();
+			//for (int i = 0; i < this->str; i++) { delete[]mass[i]; }
+			//delete[]mass;
 			// выделяем новую память
+			
 			this->str = obg.str;
 			this->col = obg.col;
 			this->mass = new int* [this->str];
@@ -81,7 +80,7 @@ public:
 		}
 		else
 		{
-			if (this->str != obg.str) //Проверка на равенство столбцы
+			if (this->col != obg.col) //Проверка на равенство столбцы
 			{
 				// удаляем память (часть)
 				for (int i = 0; i < this->str; i++) { delete[]mass[i]; }
@@ -233,6 +232,7 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 
+	Matrix a0; a0.printMatrix();
 	Matrix a(4, 4);// создаем новый объект
 	a.printMatrix();// выводим объект
 	a.inicialis();// заполняем случайными числами
@@ -241,7 +241,10 @@ int main()
 	a1.printMatrix();// выводим объект
 	cout << "\nМаксимум " << a.max() << " \n";
 	cout << "\nМинимум " << a.min() << " \n";
+
+	cout << "\nсоздаем новый объект \n";
 	Matrix b(4, 4);// создаем новый объект
+	cout << "\nзаполняем случайными числами \n";
 	b.inicialis();// заполняем случайными числами
 	b.printMatrix();// выводим объект
 	Matrix c1 = a + b; // суммирование
@@ -251,6 +254,22 @@ int main()
 	Matrix c3 = a * b; // умножаем
 	c3.printMatrix();
 
+	cout << "\nсоздаем новый объект \n";
+	Matrix b2(3, 3);// создаем новый объект
+	//cout << "\nзаполняем случайными числами \n";
+	b2.inicialis();// заполняем случайными числами
+	Matrix b22 = b2;// Копируем новый объект
+	b22.printMatrix();// выводим объект
+	b22 = c1;
+	b22.printMatrix();// выводим объект
+
+	cout << "\nсоздаем новый объект \n";
+	Matrix b3(3, 4);// создаем новый объект
+	//cout << "\nзаполняем случайными числами \n";
+	b3.inicialis();// заполняем случайными числами
+	b3.printMatrix();// выводим объект
+	b22 = b3;
+	b22.printMatrix();// выводим объект
 
 	return 0;
 }
