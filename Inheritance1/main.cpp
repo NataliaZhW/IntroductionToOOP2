@@ -11,6 +11,8 @@ using namespace std;
 #define STUDENT_GIVE_PARAMETRS speciality, group, rating, attendance
 #define TEACHER_TAKE_PARAMETRS const std::string& speciality, unsigned int experiensce
 #define TEACHER_GIVE_PARAMETRS speciality, experiensce
+#define GRADUATE_TAKE_PARAMETRS const std::string& diplom_name, unsigned int ball
+#define GRADUATE_GIVE_PARAMETRS diplom_name, ball
 
 class Human
 {
@@ -34,7 +36,7 @@ public:
 		set_age(age);
 		cout << "HConstructor:\t" << this << "\n";
 	};
-	~Human() { cout << "HDestructor:\t" << this << "\n"; };
+	virtual ~Human() { cout << "HDestructor:\t" << this << "\n"; };
 
 	virtual void info()const { cout << last_name << " " << first_name << " " << age << " y/o\n"; }
 };
@@ -65,7 +67,7 @@ public:
 		set_attendance(attendance);
 		cout << "SConstructor:\t" << this << "\n";
 	};
-	~Student()  { cout << "SDestructor:\t" << this << "\n"; };
+	~Student() override { cout << "SDestructor:\t" << this << "\n"; };
 
 	void info()const override //переопределяем
 	{
@@ -81,7 +83,7 @@ private:
 	unsigned int experiensce;
 public:
 	const std::string& get_speciality() const { return speciality; }
-	const unsigned int get_experiensce()const { return experiensce; }
+	unsigned int get_experiensce()const { return experiensce; }
 	void set_speciality(const std::string& speciality) { this->speciality = speciality; }
 	void set_experiensce(unsigned int experiensce) { this->experiensce = experiensce; }
 
@@ -92,7 +94,7 @@ public:
 		set_experiensce(experiensce);
 		cout << "TConstructor:\t" << this << "\n";
 	};
-	~Teacher() { cout << "TDestructor:\t" << this << "\n"; };
+	~Teacher() override { cout << "TDestructor:\t" << this << "\n"; };
 
 	void info()const override
 	{
@@ -100,6 +102,41 @@ public:
 		cout << " " << speciality << " " << experiensce << "\n";
 	}
 };
+
+class Graduate :public Student
+{
+private:
+	std::string diplom_name;
+	unsigned int ball;
+public:
+	const std::string& get_diplom_name() const { return diplom_name; }
+	unsigned int get_balle()const { return ball; }
+	void set_diplom_name(const std::string& diplom_name) { this->diplom_name = diplom_name; }
+	void set_ball(unsigned int ball) { this->ball = ball; }
+
+	//Constructor
+	Graduate(HUMAN_TAKE_PARAMETRS, STUDENT_TAKE_PARAMETRS, GRADUATE_TAKE_PARAMETRS) :Student(HUMAN_GIVE_PARAMETRS, STUDENT_GIVE_PARAMETRS)
+	{
+		set_diplom_name(diplom_name);
+		set_ball(ball);
+		cout << "GConstructor:\t" << this << "\n";
+	};
+	~Graduate() override { cout << "GDestructor:\t" << this << "\n"; };
+
+	void info()const override
+	{
+		Student::info();
+		cout << " " << diplom_name << " " << ball << "\n";
+	}
+};
+
+std::ostream& operator << (std::ostream& os, const Human& obg)
+{
+	//os << obg.get_last_name() << " " << obg.get_first_name() << " " << obg.get_age() << " y/o\n"; 
+	obg.info();
+	return os;
+}
+//std::istream& operator >> (std::istream& is, Human& obg){}
 
 //#define INHERITANCE_CHECK
 
@@ -116,6 +153,11 @@ void main()
 
 	Teacher teacher("White", "Wolter", 50, "Chemistry", 25);
 	teacher.info();
+
+	Graduate graduate("Vercetty", "Tommy", 30, "Theft", "Vice", 97, 98, "Vice", 9);
+	graduate.info();
+	cout << graduate << "\n";
+
 #endif // INHERITANCE_CHECK
 
 	// Generalization:
@@ -123,15 +165,23 @@ void main()
 	{
 		new Student("Pinkman", "Jessy", 22, "Chemistry", "WW_220", 70, 97),
 		new Teacher("White", "Wolter", 50, "Chemistry", 25),
-		new Student("Vercetty", "Tommy", 30,"Theft", "Vice", 97, 98)
+		new Graduate("Vercetty", "Tommy", 30,"Theft", "Vice", 97, 98, "Vice", 9)
 	};
 	cout << delimiter;
-	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++) 
-	{ 
-		//group[i]->info(); 	
+
+	//cout << sizeof(group) << " " << sizeof(group[0]) << "\n";
+	//cout << delimiter;
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		//cout << i << " " << sizeof(group[i]) << "\n";
+		//group[i]->info();
 		cout << *group[i] << "\n";
-		cout << delimiter; 
+		cout << delimiter;
 	}
 
-	
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		delete group[i]; //group[i]->~Human();			
+		cout << delimiter;
+	}
 }
